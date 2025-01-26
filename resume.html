@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .resume-container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        .left-section {
+            width: 30%;
+            padding: 20px;
+            border-right: 2px solid #ddd;
+        }
+        .right-section {
+            width: 65%;
+            padding: 20px;
+        }
+        h3 {
+            color: #333;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        p {
+            color: #555;
+            margin: 10px 0;
+        }
+        .photo {
+            width: 100%;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+        }
+        .summary, .education, .experience, .skills, .tools, .strengths, .weaknesses, .activities {
+            margin-bottom: 20px;
+        }
+        .download-btn {
+            background-color: #df540e;
+            color: white;
+            padding: 4px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+           text-align: center;
+            margin-top: 5px;
+        }
+        .download-btn:hover {
+            background-color: #e65c00;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+      
+        .normal h3 {
+            color: #2ecc71;
+            border-bottom-color: #2ecc71;
+        }
+        .normal .photo {
+            border-color: #2ecc71;
+        }
+
+      
+        .professional h3 {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        .professional .photo {
+            border-color: #3498db;
+        }
+
+      
+        .colorful h3 {
+            color: #ff6600;
+            border-bottom-color: #ff6600;
+        }
+        .colorful .photo {
+            border-color: #ff6600;
+        }
+        .button{
+            text-align: center;
+        }
+
+ 
+    </style>
+</head>
+<body>
+    <div class="resume-container" id="resumeCard">
+        <div class="left-section">
+            <img id="photo" class="photo" src="" alt="Profile Photo">
+            <h3 id="name"></h3>
+            <p id="contact"></p>
+            <p id="email"></p>
+            <p id="address"></p>
+            <p id="linkedin"></p>
+            <p id="github"></p>
+            <div class="strengths">
+                <h3>Strengths</h3>
+                <p id="strengths"></p>
+            </div>
+            <div class="weaknesses">
+                <h3>Weaknesses</h3>
+                <p id="weaknesses"></p>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="summary">
+                <h3>Summary</h3>
+                <p id="summary"></p>
+            </div>
+            <div class="education">
+                <h3>Academic Education</h3>
+                <p id="college"></p>
+                <p>HSC Percentage: <span id="hsc"></span>%</p>
+                <p>SSC Percentage: <span id="ssc"></span>%</p>
+            </div>
+            <div class="experience">
+                <h3>Work Experience</h3>
+                <p id="experience"></p>
+            </div>
+            <div class="skills">
+                <h3>Skills</h3>
+                <p id="skills"></p>
+            </div>
+            <div class="tools">
+                <h3>Tools</h3>
+                <p id="tools"></p>
+            </div>
+            <div class="activities">
+                <h3>Other Activities</h3>
+                <p id="activities"></p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="button">
+    <button class="download-btn" id="downloadResume">Download Resume as PDF</button>
+    <a href="dashboard.html" class="back-to-dashboard-btn">Back to Dashboard</a>
+</div>
+    <script>
+        const resumeData = JSON.parse(localStorage.getItem('resumeData'));
+        const selectedTemplate = localStorage.getItem('selectedTemplate') || 'normal';
+
+    
+        document.body.classList.add(selectedTemplate);
+
+        if (resumeData) {
+            document.getElementById('name').innerText = resumeData.name;
+            document.getElementById('contact').innerText = `Phone: ${resumeData.contact}`;
+            document.getElementById('email').innerText = `Email: ${resumeData.email}`;
+            document.getElementById('address').innerText = `Address: ${resumeData.address}`;
+            document.getElementById('linkedin').innerText = `LinkedIn: ${resumeData.linkedin}`;
+            document.getElementById('github').innerText = `GitHub: ${resumeData.github}`;
+            document.getElementById('college').innerText = resumeData.college;
+            document.getElementById('hsc').innerText = resumeData.hsc;
+            document.getElementById('ssc').innerText = resumeData.ssc;
+            document.getElementById('summary').innerText = resumeData.summary;
+            document.getElementById('experience').innerText = resumeData.experience;
+            document.getElementById('skills').innerText = resumeData.skills;
+            document.getElementById('tools').innerText = resumeData.tools;
+            document.getElementById('strengths').innerText = resumeData.strengths;
+            document.getElementById('weaknesses').innerText = resumeData.weaknesses;
+            document.getElementById('activities').innerText = resumeData.activities;
+            document.getElementById('photo').src = resumeData.photo;
+        }
+
+        // Convert the resume to PDF
+        document.getElementById('downloadResume').addEventListener('click', function () {
+            const resumeCard = document.getElementById('resumeCard');
+            const opt = {
+                margin:       1,
+                filename:     'My_Resume.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(resumeCard).set(opt).save();
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</body>
+</html>

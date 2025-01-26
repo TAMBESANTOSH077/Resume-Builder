@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/20c5629a29.js" crossorigin="anonymous"></script>
+</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Generator Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: hsla(0, 0%, 100%, 0.648);
+            margin: 0;
+            padding: 0;
+        }
+
+        .bg-container{
+          background-image: url("https://img.freepik.com/free-vector/abstract-digital-grid-vector-black-background_53876-111550.jpg");
+          background-size: cover;
+          height: 100vh;
+
+        }
+        .dashboard-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .dashboard-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: rgb(255, 255, 255);
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .dashboard-btn:hover {
+            background-color: #2980b9;
+        }
+        .template-selection {
+            margin-top: 30px;
+            font-size: 1.2rem;
+        }
+        .template-option {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+        }
+        .professional-template { background-color: #257fd8; color: white; }
+        .normal-template { background-color: #2ecc71; color: white; }
+        .colorful-template { background-color: #e77c18; color: white; }
+    </style>
+</head>
+<body>
+    <div class="bg-container d-flex flex-column justify-content-center">
+    <div class="dashboard-container ">
+        <h1>Welcome to Your Resume Dashboard</h1>
+        <p>Select an action to proceed:</p>
+
+        <a href="index.html" class="dashboard-btn">Create New Resume</a>
+        <a href="#" class="dashboard-btn" id="editResumeBtn">View/Edit Existing Resume</a>
+
+        <div class="template-selection">
+            <h2>Select a Template</h2>
+            <div class="template-option professional-template" data-template="professional">Blue Template</div>
+            <div class="template-option normal-template" data-template="normal">Green Template</div>
+            <div class="template-option colorful-template" data-template="colorful">Oranage Template</div>
+        </div>
+    </div>
+</div>
+    <script>
+
+        const templateOptions = document.querySelectorAll('.template-option');
+        templateOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                const selectedTemplate = this.getAttribute('data-template');
+                localStorage.setItem('selectedTemplate', selectedTemplate);
+                alert(`Template "${selectedTemplate}" selected!`);
+            });
+        });
+
+        document.getElementById('editResumeBtn').addEventListener('click', function() {
+            const resumeData = JSON.parse(localStorage.getItem('resumeData'));
+            if (resumeData) {
+                window.location.href = 'resume.html';
+            } else {
+                alert('No saved resume data found. Please create a new resume first.');
+            }
+        });
+    </script>
+</body>
+</html>
